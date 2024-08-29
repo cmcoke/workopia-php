@@ -1,4 +1,7 @@
-<?php
-  require '../helpers.php';
+<?php 
+require '../helpers.php';
 
-  require basePath('views/home.views.php');
+loadView('home');
+
+
+?>
