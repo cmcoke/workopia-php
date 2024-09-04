@@ -41,12 +41,7 @@
   // Uncomment the following line to debug the URI by inspecting and stopping the script.
   // inspectAndDie($uri);
 
-  // Get the current HTTP request method from the server's REQUEST_METHOD variable. This retrieves the method (e.g., GET, POST) used in the current HTTP request.
-  $method = $_SERVER['REQUEST_METHOD'];
-  // Uncomment the following line to debug the HTTP method by inspecting and stopping the script.
-  // inspectAndDie($method);
-
   // Route the request based on the URI and method. The router matches the URI and method to the defined routes and loads the corresponding controller.
-  $router->route($uri, $method);
+  $router->route($uri);
 
 ?>
