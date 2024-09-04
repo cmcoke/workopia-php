@@ -1,5 +1,11 @@
 <?php 
 
+  // Declare the namespace for the Database class. This places the Database class within the 'Framework' namespace, helping to organize the code and avoid class name conflicts.
+  namespace Framework;
+
+  // Import the PDO class from the global namespace. This allows the Database class to use PDO for database interactions without needing to specify the global namespace each time.
+  use PDO;
+
   class Database {
 
     public $conn;

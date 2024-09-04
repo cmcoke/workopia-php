@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+// Import the Database class from the Framework namespace. This allows you to use the Database class in this file without needing to specify the full namespace each time.
+use Framework\Database;
 
 // Load the database configuration settings from the specified file. This configuration array typically contains database connection details such as host, port, dbname, username, and password.
 $config = require basePath('config/db.php');

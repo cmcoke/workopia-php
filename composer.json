@@ -1,0 +1,16 @@
+{
+  "name": "cmcoke/workopia-php",
+  "description": "Job listing application",
+  "authors": [
+    {
+      "name": "Charles Coke",
+      "email": "support@cmc.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}
