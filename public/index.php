@@ -1,4 +1,5 @@
-<?php 
+<?php
+  session_start();
 
   // Include the helpers file for utility functions. This file contains common functions that can be used throughout the application.
   require '../helpers.php';

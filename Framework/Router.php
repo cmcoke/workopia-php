@@ -136,8 +136,16 @@
        */
       public function route($uri){
 
+
         // Get the current HTTP request method from the server's REQUEST_METHOD variable. This retrieves the method (e.g., GET, POST) used in the current HTTP request.
         $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        // Check for _method input
+        if ($requestMethod === 'POST' && isset($_POST['_method'])) {
+          // Override the request method with the value of _method
+          $requestMethod = strtoupper($_POST['_method']);
+        }
+        
 
         /**
          * Iterate through the registered routes to find a match.
