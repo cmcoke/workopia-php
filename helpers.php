@@ -47,25 +47,36 @@
   /**
    * Load a partial file from the partials directory.
    * 
-   * This function works similarly to loadView, but it is used to load smaller, 
-   * reusable parts of a view (partials) like head, footer, navbar, etc.
+   * This function works similarly to loadView but is used to load smaller, 
+   * reusable parts of a view (partials), such as head, footer, navbar, etc.
    * It constructs the file path for a partial file and includes it if it exists. 
    * If the file doesn't exist, it displays an error message.
    * 
+   * The function also accepts an optional `$data` array, which is extracted into individual variables
+   * for use within the partial file. This allows dynamic data to be passed into partials.
+   * 
    * @param string $name The name of the partial file (without the .php extension).
+   * @param array $data (Optional) An associative array of data to be extracted and made available in the partial.
    * @return void
-  */
-  function loadPartial($name){
+   */
+  function loadPartial($name, $data = []){
 
+    // Construct the full path to the partial file based on the provided name.
     $partialPath = basePath("App/views/partials/{$name}.php");
 
-    if(file_exists($partialPath)){
-      require $partialPath;
-    }else{
-      echo " Partial '{$name}' not found! ";
-    }
+    // Check if the partial file exists at the constructed path.
+    if (file_exists($partialPath)) {
+        // Extract the $data array so that its keys become variables available within the partial file.
+        extract($data);
 
+        // Include the partial file so its content is rendered at this location.
+        require $partialPath;
+    } else {
+        // Display an error message if the partial file does not exist.
+        echo "Partial '{$name}' not found!";
+    }
   }
+
 
 
   /**
