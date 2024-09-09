@@ -9,8 +9,7 @@ class Session
    * 
    * @return void
    */
-  public static function start()
-  {
+  public static function start(){
     /* 
     * Check if a session is not already active.
     *
@@ -34,8 +33,7 @@ class Session
    * @param mixed $value The value to be stored in the session.
    * @return void
    */
-  public static function set($key, $value)
-  {
+  public static function set($key, $value){
     // Store the value in the session under the specified key.
     $_SESSION[$key] = $value;
   }
@@ -48,8 +46,7 @@ class Session
    * @param mixed $default The default value to return if the key is not found in the session.
    * @return mixed The session value associated with the key, or the default value if not found.
    */
-  public static function get($key, $default = null)
-  {
+  public static function get($key, $default = null){
     // Return the value associated with the key if it exists, otherwise return the default value.
     return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
   }
@@ -61,8 +58,7 @@ class Session
    * @param string $key The session key to check.
    * @return bool True if the session key exists, otherwise false.
    */
-  public static function has($key)
-  {
+  public static function has($key){
     // Return true if the session key is set, otherwise false.
     return isset($_SESSION[$key]);
   }
@@ -74,8 +70,7 @@ class Session
    * @param string $key The session key to be removed.
    * @return void
    */
-  public static function clear($key)
-  {
+  public static function clear($key){
     // Check if the session key exists, and if so, unset it to remove the key and its value.
     if (isset($_SESSION[$key])) {
       unset($_SESSION[$key]);
@@ -88,8 +83,7 @@ class Session
    * 
    * @return void
    */
-  public static function clearAll()
-  {
+  public static function clearAll(){
     // Unset all session variables.
     session_unset();
     // Destroy the current session.
@@ -106,8 +100,7 @@ class Session
    * @param string $message The flash message content.
    * @return void
    */
-  public static function setFlashMessage($key, $message)
-  {
+  public static function setFlashMessage($key, $message){
     // Store the flash message in the session with the key prefixed by 'flash_'.
     self::set('flash_' . $key, $message);
   }
@@ -122,8 +115,7 @@ class Session
    * @param mixed $default The default value to return if the flash message doesn't exist.
    * @return string The flash message content, or the default value if not found.
    */
-  public static function getFlashMessage($key, $default = null)
-  {
+  public static function getFlashMessage($key, $default = null){
     // Retrieve the flash message using the key (with 'flash_' prefix).
     $message = self::get('flash_' . $key, $default);
     // Clear the flash message after it has been retrieved so it won't be displayed again.

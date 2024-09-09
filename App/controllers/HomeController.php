@@ -29,7 +29,7 @@
     public function index(){
       
         // Execute a SQL query to retrieve up to 6 listings from the 'listings' table and store the results. The query is executed using the Database class instance, and the results are fetched as an array.
-        $listings = $this->db->query('SELECT * FROM listings LIMIT 6')->fetchAll();
+        $listings = $this->db->query('SELECT * FROM listings ORDER BY created_at DESC LIMIT 6')->fetchAll();
 
         // Load the 'home' view and pass the retrieved listings data to it as an associative array. This will render the 'home' view template and make the $listings data available within the view.
         loadView('home', [
