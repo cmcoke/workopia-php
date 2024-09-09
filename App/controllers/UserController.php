@@ -163,6 +163,83 @@ class UserController{
     redirect('/');
   }
 
+
+
+  /**
+   * Authenticate a user using email and password
+   * 
+   * This function handles user login by validating the input, checking if the user exists, and verifying the password. 
+   * If successful, it sets the user session and redirects to the homepage.
+   * 
+   * @return void
+   */
+  public function authenticate(){
+    
+    // Retrieve the email and password from the POST request (user-submitted form data)
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Initialize an empty array to store validation errors
+    $errors = [];
+
+    // Validate the email field to ensure it contains a valid email address
+    if (!Validation::email($email)) {
+      $errors['email'] = 'Please enter a valid email';
+    }
+
+    // Validate the password to ensure it has at least 6 characters
+    if (!Validation::string($password, 6, 50)) {
+      $errors['password'] = 'Password must be at least 6 characters';
+    }
+
+    // If there are validation errors, load the login view and display the errors to the user
+    if (!empty($errors)) {
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit; // Stop further execution if validation fails
+    }
+
+    // Prepare the query parameters to find a user by their email address
+    $params = [
+      'email' => $email
+    ];
+
+    // Execute a SQL query to check if the user exists in the 'users' table using the provided email
+    $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+
+    // If no user is found, show an error message and reload the login page
+    if (!$user) {
+      $errors['email'] = 'Incorrect credentials';
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit; // Stop execution if the email doesn't match any user
+    }
+
+    // Verify the password entered by the user against the hashed password stored in the database
+    if (!password_verify($password, $user->password)) {
+      $errors['email'] = 'Incorrect credentials';
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit; // Stop execution if the password is incorrect
+    }
+
+    // If authentication is successful, store the user's data in a session
+    Session::set('user', [
+      'id' => $user->id,
+      'name' => $user->name,
+      'email' => $user->email,
+      'city' => $user->city,
+      'state' => $user->state
+    ]);
+
+    // Redirect the user to the homepage after successful login
+    redirect('/');
+  }
+
+
   
 }
 
