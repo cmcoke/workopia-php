@@ -311,33 +311,49 @@ class ListingController{
   }
 
 
-    /**
-     * Search listings by keywords/location
-     * 
-     * @return void
-     */
-    public function search(){
-      
-      $keywords = isset($_GET['keywords']) ? trim($_GET['keywords']) : '';
-      
-      $location = isset($_GET['location']) ? trim($_GET['location']) : '';
 
-      $query = "SELECT * FROM listings WHERE (title LIKE :keywords OR description LIKE :keywords OR tags LIKE :keywords OR company LIKE :keywords) AND (city LIKE :location OR state LIKE :location)";
+  /**
+   * Search listings by keywords and/or location
+   * 
+   * This method handles the search functionality for listings based on user-provided
+   * keywords and location. It retrieves relevant listings from the database that match
+   * the search criteria and displays them on the listings page.
+   * 
+   * @return void
+   */
+  public function search() {
+    
+    // Check if the 'keywords' parameter is set in the GET request and trim any excess whitespace. 
+    // If not set, assign an empty string as the default value.
+    $keywords = isset($_GET['keywords']) ? trim($_GET['keywords']) : '';
 
-      $params = [
+    // Check if the 'location' parameter is set in the GET request and trim any excess whitespace. 
+    // If not set, assign an empty string as the default value.
+    $location = isset($_GET['location']) ? trim($_GET['location']) : '';
+
+    // SQL query to search for listings where the title, description, tags, or company name 
+    // matches the provided keywords and the city or state matches the provided location.
+    $query = "SELECT * FROM listings WHERE (title LIKE :keywords OR description LIKE :keywords OR tags LIKE :keywords OR company LIKE :keywords) AND (city LIKE :location OR state LIKE :location)";
+
+    // Prepare the parameters for the query, wrapping the keywords and location in 
+    // wildcards (%) to enable partial matches in the SQL LIKE operator.
+    $params = [
         'keywords' => "%{$keywords}%",
         'location' => "%{$location}%"
-      ];
+    ];
 
-      $listings = $this->db->query($query, $params)->fetchAll();
+    // Execute the query with the provided parameters and retrieve all matching listings.
+    $listings = $this->db->query($query, $params)->fetchAll();
 
-      loadView('/listings/index', [
+    // Load the view to display the search results, passing the matching listings, keywords, 
+    // and location back to the view to render the results.
+    loadView('/listings/index', [
         'listings' => $listings,
         'keywords' => $keywords,
         'location' => $location
-      ]);
-      
-    }
+    ]);
+  }
+
 
 
 }
